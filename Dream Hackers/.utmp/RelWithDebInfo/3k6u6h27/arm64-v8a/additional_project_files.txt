@@ -1,0 +1,17 @@
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/GAToUnityCallbacks.h
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/MacroEnd.h
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/MacroHeaderBegin.h
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/MacroSourceBegin.h
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/UGAApplication.h
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/UGAConfiguration.h
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/UGADebug.h
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/UGAEvents.h
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/UGAInput.h
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/UGASoftKeyboard.h
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/UGASoftKeyboardCallbacks.h
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/UGATypes.h
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/UGAVersion.h
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/UnityToGACallbacks.h
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/UnityToGAConfigurationCallbacks.h
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/UnityToGAKeyEventCallbacks.h
+/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/UnityToGAMotionEventCallbacks.h

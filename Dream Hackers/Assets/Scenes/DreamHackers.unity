@@ -2789,7 +2789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a0659e16c6e404d8fc56d8a47a9339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DreamHackers.Networking.NetworkManager
-  serverIP: 10.29.155.180
+  serverIP: 10.29.242.221
   serverPort: 8080
   autoConnectOnStart: 1
   showDebugLogs: 1

@@ -1,0 +1,10 @@
+# ninja log v5
+4	1073	1769207803930012641	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	a4dbb13b38ee4f6
+7	1106	1769207803962653047	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	53a17a1cda0cfb59
+3	1108	1769207803961533756	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	3a893ed5f7f522a3
+1	1117	1769207803973074418	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	e33c7864474862b7
+2	1203	1769207804060452430	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	957f6218ecc802c2
+7	1208	1769207804065430929	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	7b6a4c257ffec023
+3	1376	1769207804234381121	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	cb0d4870818979aa
+0	1489	1769207804345981375	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	1badd749e973c3c2
+1489	1637	1769207804494126451	/Users/samanthaherle/Documents/GitHub/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/3k6u6h27/obj/arm64-v8a/libgame.so	87a01af1e7a4660e
