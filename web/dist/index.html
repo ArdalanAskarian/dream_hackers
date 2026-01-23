@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Dream Hackers - Phone Controller</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Connection Screen -->
+  <div id="connection-screen">
+    <h1>Dream Hackers</h1>
+    <p>Connect to the dream world</p>
+    <input
+      type="text"
+      id="server-ip-input"
+      placeholder="192.168.1.100:8080"
+      autocomplete="off"
+      autocapitalize="off"
+    >
+    <button id="connect-btn">Connect</button>
+  </div>
+
+  <!-- Main App Screen -->
+  <div id="app-screen">
+    <!-- Status Bar -->
+    <div id="status-bar">
+      <div class="status-indicator">
+        <div class="status-dot" id="status-dot"></div>
+        <span id="status-text">Connected</span>
+      </div>
+      <div class="status-indicator">
+        <span>Dream Hackers</span>
+      </div>
+    </div>
+
+    <!-- Card Container -->
+    <div id="card-container">
+      <!-- Cards will be rendered here by JavaScript -->
+    </div>
+
+    <!-- Instructions -->
+    <div id="instructions">
+      <div class="instruction-icons">
+        <div class="instruction">
+          <div class="instruction-icon">👈</div>
+          <div class="instruction-text">Discard</div>
+        </div>
+        <div class="instruction">
+          <div class="instruction-icon">👆👆</div>
+          <div class="instruction-text">Quick Send</div>
+        </div>
+        <div class="instruction">
+          <div class="instruction-icon">👉</div>
+          <div class="instruction-text">Send to VR</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No More Cards Screen -->
+    <div id="no-more-cards">
+      <div class="emoji">✨</div>
+      <h2>No more objects</h2>
+      <button id="restart-btn">Start Over</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Connection Warning Banner -->
+  <div id="connection-warning">
+    <span class="warning-icon">⚠️</span>
+    <span>Connection lost. Swipes will be sent when reconnected.</span>
+    <span class="queue-badge" id="queue-count">0 queued</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
