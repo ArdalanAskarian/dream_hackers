@@ -77,6 +77,8 @@ class DreamHackersApp {
     if (savedIP) {
       this.elements.serverIpInput.value = savedIP;
     }
+
+    // Show connection screen - user must connect first
   }
 
   async loadObjects() {
@@ -664,6 +666,9 @@ class DreamHackersApp {
     const dot = this.elements.statusDot;
     const text = this.elements.statusText;
 
+    // These elements are optional - skip if not present
+    if (!dot || !text) return;
+
     dot.classList.remove('disconnected', 'reconnecting');
 
     switch (status) {
@@ -734,7 +739,7 @@ class DreamHackersApp {
 
     const obj = this.objects[this.currentIndex];
 
-    // Build card HTML with all new elements
+    // Build card HTML (action buttons are now in HTML, outside card container)
     this.elements.cardContainer.innerHTML = `
       <div class="card-container-tint tint-left"></div>
       <div class="card-container-tint tint-right"></div>
@@ -745,14 +750,6 @@ class DreamHackersApp {
       </div>
       <div class="swipe-indicators swipe-left-indicator">✗</div>
       <div class="swipe-indicators swipe-right-indicator">✓</div>
-      <div id="action-buttons">
-        <button class="action-btn reject-btn" aria-label="Discard">
-          <span class="btn-icon">✗</span>
-        </button>
-        <button class="action-btn accept-btn" aria-label="Send to VR">
-          <span class="btn-icon">✓</span>
-        </button>
-      </div>
     `;
   }
 
@@ -760,13 +757,19 @@ class DreamHackersApp {
     this.elements.cardContainer.style.display = 'none';
     this.elements.instructions.style.display = 'none';
     this.elements.noMoreCards.style.display = 'flex';
+    // Hide action buttons on no more cards screen
+    const actionButtons = document.getElementById('action-buttons');
+    if (actionButtons) actionButtons.style.display = 'none';
   }
 
   restart() {
     this.currentIndex = 0;
     this.elements.cardContainer.style.display = 'flex';
-    this.elements.instructions.style.display = 'block';
+    this.elements.instructions.style.display = 'flex';
     this.elements.noMoreCards.style.display = 'none';
+    // Show action buttons again
+    const actionButtons = document.getElementById('action-buttons');
+    if (actionButtons) actionButtons.style.display = 'flex';
     this.renderCard();
   }
 }

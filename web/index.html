@@ -12,8 +12,7 @@
 
   <!-- Connection Screen -->
   <div id="connection-screen">
-    <h1>Dream Hackers</h1>
-    <p>Connect to the dream world</p>
+    <h1>DOES THE<br>INTERNET<br>DREAM OF<br><span class="italic">itself?</span></h1>
     <input
       type="text"
       id="server-ip-input"
@@ -26,15 +25,9 @@
 
   <!-- Main App Screen -->
   <div id="app-screen">
-    <!-- Status Bar -->
-    <div id="status-bar">
-      <div class="status-indicator">
-        <div class="status-dot" id="status-dot"></div>
-        <span id="status-text">Connected</span>
-      </div>
-      <div class="status-indicator">
-        <span>Dream Hackers</span>
-      </div>
+    <!-- Title -->
+    <div id="title-section">
+      <h1>DOES THE<br>INTERNET<br>DREAM OF<br><span class="italic">itself?</span></h1>
     </div>
 
     <!-- Card Container -->
@@ -42,21 +35,28 @@
       <!-- Cards will be rendered here by JavaScript -->
     </div>
 
+    <!-- Action Buttons -->
+    <div id="action-buttons">
+      <button class="action-btn reject-btn" aria-label="Discard">
+        <span class="btn-icon">✕</span>
+      </button>
+      <button class="action-btn accept-btn" aria-label="Send to VR">
+        <span class="btn-icon">✓</span>
+      </button>
+    </div>
+
     <!-- Instructions -->
     <div id="instructions">
-      <div class="instruction-icons">
-        <div class="instruction">
-          <div class="instruction-icon">👈</div>
-          <div class="instruction-text">Discard</div>
-        </div>
-        <div class="instruction">
-          <div class="instruction-icon">👆👆</div>
-          <div class="instruction-text">Quick Send</div>
-        </div>
-        <div class="instruction">
-          <div class="instruction-icon">👉</div>
-          <div class="instruction-text">Send to VR</div>
-        </div>
+      <div class="instruction left-instruction">
+        <img src="pointinghand.gif" alt="Left hand" class="hand-icon hand-left">
+        <div class="instruction-text">DISCARD</div>
+      </div>
+      <div class="tap-instruction">
+        TAP<br>TO CHOOSE
+      </div>
+      <div class="instruction right-instruction">
+        <img src="pointinghand.gif" alt="Right hand" class="hand-icon hand-right">
+        <div class="instruction-text">CHOOSE</div>
       </div>
     </div>
 
