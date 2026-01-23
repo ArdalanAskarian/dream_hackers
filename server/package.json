@@ -1,0 +1,15 @@
+{
+  "name": "dream-hackers-server",
+  "version": "1.0.0",
+  "description": "Local WebSocket server for Dream Hackers phone-to-VR communication",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["websocket", "vr", "unity", "hackathon"],
+  "author": "Dream Hackers Team",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^8.13.0"
+  }
+}

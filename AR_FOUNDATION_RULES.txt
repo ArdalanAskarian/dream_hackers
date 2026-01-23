@@ -1,0 +1,100 @@
+╔══════════════════════════════════════════════════════════════╗
+║           AR FOUNDATION - TEAM RULES                         ║
+║                                                              ║
+║   Print this and put it next to your monitor!               ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+🚫 RULE #1: NEVER UPDATE AR FOUNDATION
+
+   In Unity Package Manager:
+
+   ❌ DO NOT click "Update" on AR Foundation
+   ❌ DO NOT click "Update to 6.3.2"
+   ❌ DO NOT use "Update All" button
+
+   ✅ ALWAYS keep AR Foundation at 6.3.0
+
+
+🚫 RULE #2: IGNORE THE UPDATE NOTIFICATION
+
+   Unity will show: "Update to 6.3.2 available"
+
+   This is NORMAL. IGNORE IT.
+
+   We CANNOT update because Android XR requires 6.3.0
+
+
+🚫 RULE #3: ASK BEFORE UPDATING ANY XR PACKAGE
+
+   Packages that affect AR Foundation:
+   - com.unity.xr.arfoundation
+   - com.unity.xr.androidxr-openxr
+   - com.unity.xr.hands
+   - com.unity.xr.openxr
+   - com.unity.xr.management
+
+   ASK THE TEAM before updating any of these!
+
+
+✅ RULE #4: RUN GIT HOOKS SETUP (Once)
+
+   macOS/Linux:  ./setup-git-hooks.sh
+   Windows:      setup-git-hooks.bat
+
+   This prevents accidents from breaking everyone's project.
+
+
+✅ RULE #5: IF UNITY BREAKS
+
+   Run this:
+
+   macOS/Linux:  ./force_fix_packages.sh
+   Windows:      reset_unity_packages.bat
+
+   Then restart Unity.
+
+
+✅ RULE #6: AFTER GIT PULL
+
+   If you see "Package version fixed" message:
+   1. Close Unity
+   2. Reopen Unity
+   3. Wait for package import to finish
+
+
+═══════════════════════════════════════════════════════════════
+
+WHY?
+
+Android XR OpenXR 1.1.0 REQUIRES AR Foundation 6.3.0
+
+Using 6.3.1+ causes "Invalid signature" error
+
+This breaks Unity for EVERYONE on the team
+
+═══════════════════════════════════════════════════════════════
+
+CURRENT LOCKED VERSIONS:
+
+✓ AR Foundation:        6.3.0  (DO NOT UPDATE)
+✓ Android XR OpenXR:    1.1.0
+✓ XR Hands:             1.7.2
+✓ XR OpenXR:            1.16.0
+✓ XR Management:        4.5.3
+
+═══════════════════════════════════════════════════════════════
+
+QUESTIONS?
+
+Read: FINAL_FIX_INSTRUCTIONS.md
+
+═══════════════════════════════════════════════════════════════
+
+REMEMBER:
+
+  "Update Available" ≠ "You Should Update"
+
+  Stay at 6.3.0 = Happy Team = Working Project
+
+═══════════════════════════════════════════════════════════════
