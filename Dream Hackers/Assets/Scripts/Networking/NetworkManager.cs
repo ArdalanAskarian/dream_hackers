@@ -24,9 +24,14 @@ namespace DreamHackers.Networking
         [Header("Debug")]
         [SerializeField] private bool showDebugLogs = true;
 
-        // Events
+        // Events - Subscribe to these in your scripts!
+        /// <summary>Fired when user swipes RIGHT (accepts) an object. Parameter is objectId.</summary>
         public event Action<string> OnObjectSwiped;
+        /// <summary>Fired when user swipes LEFT (rejects) an object. Parameter is objectId.</summary>
+        public event Action<string> OnObjectRejected;
+        /// <summary>Fired when WebSocket connects to server.</summary>
         public event Action OnConnected;
+        /// <summary>Fired when WebSocket disconnects from server.</summary>
         public event Action OnDisconnected;
 
         // Connection state
@@ -261,8 +266,13 @@ namespace DreamHackers.Networking
                 switch (message.type)
                 {
                     case "swipe_right":
-                        Log($"Object swiped: {message.objectId}");
+                        Log($"Object ACCEPTED: {message.objectId}");
                         OnObjectSwiped?.Invoke(message.objectId);
+                        break;
+
+                    case "swipe_left":
+                        Log($"Object REJECTED: {message.objectId}");
+                        OnObjectRejected?.Invoke(message.objectId);
                         break;
 
                     case "connection_established":

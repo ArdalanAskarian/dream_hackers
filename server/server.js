@@ -75,9 +75,9 @@ wss.on('connection', (ws, req) => {
         return;
       }
 
-      // Handle swipe right - relay to VR
+      // Handle swipe right (accept) - relay to VR
       if (message.type === 'swipe_right') {
-        log(`  -> Object "${message.objectId}" swiped right!`);
+        log(`  -> Object "${message.objectId}" ACCEPTED (swipe right)`);
 
         if (vrClient && vrClient.readyState === WebSocket.OPEN) {
           vrClient.send(JSON.stringify(message));
@@ -100,6 +100,17 @@ wss.on('connection', (ws, req) => {
               timestamp: Date.now()
             }));
           }
+        }
+        return;
+      }
+
+      // Handle swipe left (reject) - relay to VR
+      if (message.type === 'swipe_left') {
+        log(`  -> Object "${message.objectId}" REJECTED (swipe left)`);
+
+        if (vrClient && vrClient.readyState === WebSocket.OPEN) {
+          vrClient.send(JSON.stringify(message));
+          log('  -> Sent rejection to VR client');
         }
         return;
       }

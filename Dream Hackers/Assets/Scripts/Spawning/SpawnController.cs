@@ -1,57 +1,56 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 using DreamHackers.Networking;
 
 namespace DreamHackers.Spawning
 {
     /// <summary>
     /// Controls object spawning in response to phone swipe events.
-    /// Listens to NetworkManager and triggers ObjectSpawner.
+    /// Directly spawns prefabs based on object ID from phone.
     /// </summary>
     public class SpawnController : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private ObjectSpawner objectSpawner;
         [SerializeField] private Camera vrCamera;
 
         [Header("Spawn Settings")]
         [SerializeField] private float spawnDistance = 2.5f;
         [SerializeField] private float spawnHeightOffset = 0f;
         [SerializeField] private float randomXZOffset = 0.5f;
-        [SerializeField] private float spawnCooldown = 1f;
+        [SerializeField] private float spawnCooldown = 0.5f;
 
-        [Header("Object Mappings")]
-        [SerializeField] private List<ObjectMapping> objectMappings = new List<ObjectMapping>();
+        [Header("Object Prefabs - Drag your prefabs here")]
+        [SerializeField] private GameObject cylinderPrefab;
+        [SerializeField] private GameObject spherePrefab;
+        [SerializeField] private GameObject conePrefab;
+        [SerializeField] private GameObject torusPrefab;
+        [SerializeField] private GameObject cubePrefab;
+
+        [Header("Spawn Effect (Optional)")]
+        [SerializeField] private GameObject spawnEffectPrefab;
 
         [Header("Debug")]
         [SerializeField] private bool showDebugLogs = true;
 
         private float lastSpawnTime;
-        private Dictionary<string, int> objectIdToIndex = new Dictionary<string, int>();
+        private Dictionary<string, GameObject> objectPrefabs = new Dictionary<string, GameObject>();
 
         private void Awake()
         {
-            // Build lookup dictionary
-            for (int i = 0; i < objectMappings.Count; i++)
-            {
-                if (!string.IsNullOrEmpty(objectMappings[i].objectId))
-                {
-                    objectIdToIndex[objectMappings[i].objectId] = objectMappings[i].prefabIndex;
-                }
-            }
+            // Build lookup dictionary from serialized prefabs
+            if (cylinderPrefab != null) objectPrefabs["cylinder"] = cylinderPrefab;
+            if (spherePrefab != null) objectPrefabs["sphere"] = spherePrefab;
+            if (conePrefab != null) objectPrefabs["cone"] = conePrefab;
+            if (torusPrefab != null) objectPrefabs["torus"] = torusPrefab;
+            if (cubePrefab != null) objectPrefabs["cube"] = cubePrefab;
+
+            Log($"SpawnController initialized with {objectPrefabs.Count} prefabs");
         }
 
         private void Start()
         {
-            // Validate references
-            if (objectSpawner == null)
-            {
-                LogError("ObjectSpawner reference is missing!");
-                return;
-            }
-
+            // Get VR camera if not assigned
             if (vrCamera == null)
             {
                 vrCamera = Camera.main;
@@ -68,7 +67,7 @@ namespace DreamHackers.Spawning
                 NetworkManager.Instance.OnObjectSwiped += HandleObjectSwiped;
                 NetworkManager.Instance.OnConnected += HandleConnected;
                 NetworkManager.Instance.OnDisconnected += HandleDisconnected;
-                Log("SpawnController initialized successfully");
+                Log("SpawnController subscribed to NetworkManager events");
             }
             else
             {
@@ -111,43 +110,48 @@ namespace DreamHackers.Spawning
                 return;
             }
 
-            // Get prefab index
-            if (!objectIdToIndex.TryGetValue(objectId, out int prefabIndex))
+            // Get prefab
+            if (!objectPrefabs.TryGetValue(objectId, out GameObject prefab))
             {
-                LogError($"Unknown object ID: {objectId}");
+                LogError($"Unknown object ID: {objectId}. Available: {string.Join(", ", objectPrefabs.Keys)}");
+                return;
+            }
+
+            if (prefab == null)
+            {
+                LogError($"Prefab for '{objectId}' is null - make sure it's assigned in the Inspector!");
                 return;
             }
 
             // Spawn the object
-            SpawnObject(objectId, prefabIndex);
+            SpawnObject(objectId, prefab);
         }
 
         /// <summary>
         /// Spawn object at calculated position
         /// </summary>
-        private void SpawnObject(string objectId, int prefabIndex)
+        private void SpawnObject(string objectId, GameObject prefab)
         {
             // Calculate spawn position
             Vector3 spawnPos = CalculateSpawnPosition();
+            Quaternion spawnRot = Quaternion.identity;
 
-            // Set the prefab to spawn
-            objectSpawner.SetSpawnObjectIndex(prefabIndex);
+            // Instantiate the prefab
+            GameObject spawnedObject = Instantiate(prefab, spawnPos, spawnRot);
+            spawnedObject.name = $"{objectId}_spawned_{Time.time:F0}";
 
-            // Spawn using ObjectSpawner
-            bool success = objectSpawner.TrySpawnObject(spawnPos, Vector3.up);
-
-            if (success)
+            // Play spawn effect if assigned
+            if (spawnEffectPrefab != null)
             {
-                lastSpawnTime = Time.time;
-                Log($"Successfully spawned object '{objectId}' at {spawnPos}");
+                GameObject effect = Instantiate(spawnEffectPrefab, spawnPos, Quaternion.identity);
+                Destroy(effect, 3f); // Clean up effect after 3 seconds
+            }
 
-                // Send confirmation back to phone
-                NetworkManager.Instance?.SendSpawnConfirmation(objectId);
-            }
-            else
-            {
-                LogError($"Failed to spawn object '{objectId}'");
-            }
+            lastSpawnTime = Time.time;
+            Log($"Successfully spawned '{objectId}' at {spawnPos}");
+
+            // Send confirmation back to phone
+            NetworkManager.Instance?.SendSpawnConfirmation(objectId);
         }
 
         /// <summary>
@@ -163,8 +167,8 @@ namespace DreamHackers.Spawning
             // Base position in front of camera
             Vector3 basePos = vrCamera.transform.position + forward * spawnDistance;
 
-            // Add height offset
-            basePos.y += spawnHeightOffset;
+            // Add height offset (spawn at eye level by default)
+            basePos.y = vrCamera.transform.position.y + spawnHeightOffset;
 
             // Add random offset for variety
             if (randomXZOffset > 0)
@@ -191,29 +195,21 @@ namespace DreamHackers.Spawning
         }
 
         /// <summary>
-        /// Editor helper to setup default mappings
+        /// Test spawn from editor - right click component > Test Spawn
         /// </summary>
-        [ContextMenu("Setup Default Mappings")]
-        private void SetupDefaultMappings()
-        {
-            objectMappings = new List<ObjectMapping>
-            {
-                new ObjectMapping { objectId = "sphere", prefabIndex = 0 },
-                new ObjectMapping { objectId = "cube", prefabIndex = 1 },
-                new ObjectMapping { objectId = "torus", prefabIndex = 2 },
-                new ObjectMapping { objectId = "cylinder", prefabIndex = 3 }
-            };
-            Log("Default mappings configured");
-        }
-    }
+        [ContextMenu("Test Spawn Cylinder")]
+        private void TestSpawnCylinder() { if (cylinderPrefab) SpawnObject("cylinder", cylinderPrefab); }
 
-    /// <summary>
-    /// Maps object IDs from phone to prefab indices in ObjectSpawner
-    /// </summary>
-    [Serializable]
-    public class ObjectMapping
-    {
-        public string objectId;
-        public int prefabIndex;
+        [ContextMenu("Test Spawn Sphere")]
+        private void TestSpawnSphere() { if (spherePrefab) SpawnObject("sphere", spherePrefab); }
+
+        [ContextMenu("Test Spawn Cone")]
+        private void TestSpawnCone() { if (conePrefab) SpawnObject("cone", conePrefab); }
+
+        [ContextMenu("Test Spawn Torus")]
+        private void TestSpawnTorus() { if (torusPrefab) SpawnObject("torus", torusPrefab); }
+
+        [ContextMenu("Test Spawn Cube")]
+        private void TestSpawnCube() { if (cubePrefab) SpawnObject("cube", cubePrefab); }
     }
 }

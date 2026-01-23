@@ -275,6 +275,14 @@ h1 .italic {
   margin-bottom: 15px;
 }
 
+.card-image {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+
 .card-name {
   font-family: 'Cinzel', serif;
   font-size: 22px;

@@ -1,28 +1,39 @@
 {
   "objects": [
     {
+      "id": "cylinder",
+      "name": "Time Capsule",
+      "description": "A vessel containing fragments of time",
+      "thumbnail": "🕰️",
+      "image": "images/cylinder.png"
+    },
+    {
       "id": "sphere",
       "name": "Memory Orb",
       "description": "A floating sphere of collected memories",
-      "thumbnail": "🔮"
+      "thumbnail": "🔮",
+      "image": "images/sphere.png"
     },
     {
-      "id": "cube",
-      "name": "Thought Block",
-      "description": "A solid block of crystallized thought",
-      "thumbnail": "📦"
+      "id": "cone",
+      "name": "Dream Beacon",
+      "description": "A guiding light through dreamscapes",
+      "thumbnail": "🔦",
+      "image": "images/cone.png"
     },
     {
       "id": "torus",
       "name": "Dream Ring",
       "description": "An endless loop of recurring dreams",
-      "thumbnail": "💫"
+      "thumbnail": "💫",
+      "image": "images/torus.png"
     },
     {
-      "id": "cylinder",
-      "name": "Time Capsule",
-      "description": "A vessel containing fragments of time",
-      "thumbnail": "🕰️"
+      "id": "cube",
+      "name": "Thought Block",
+      "description": "A solid block of crystallized thought",
+      "thumbnail": "📦",
+      "image": "images/cube.png"
     }
   ]
 }

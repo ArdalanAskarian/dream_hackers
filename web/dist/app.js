@@ -436,7 +436,12 @@ class DreamHackersApp {
   // ==========================================
 
   swipeLeft(card) {
-    console.log('Swiped left - discarded');
+    const obj = this.objects[this.currentIndex];
+    console.log('Swiped left - discarded:', obj.id);
+
+    // Send reject event to server
+    this.sendSwipeLeft(obj.id);
+
     card.classList.add('swipe-left');
     this.resetVisualFeedback();
 
@@ -450,8 +455,8 @@ class DreamHackersApp {
     const obj = this.objects[this.currentIndex];
     console.log('Swiped right - sending to VR:', obj.id);
 
-    // Send to server (or queue if disconnected)
-    this.sendSwipe(obj.id);
+    // Send accept event to server
+    this.sendSwipeRight(obj.id);
 
     card.classList.add('swipe-right');
     this.resetVisualFeedback();
@@ -472,7 +477,7 @@ class DreamHackersApp {
   // WEBSOCKET & CONNECTION RESILIENCE
   // ==========================================
 
-  sendSwipe(objectId) {
+  sendSwipeRight(objectId) {
     const message = {
       type: 'swipe_right',
       objectId: objectId,
@@ -488,6 +493,19 @@ class DreamHackersApp {
       this.showConnectionWarning();
       this.updateQueueCount();
     }
+  }
+
+  sendSwipeLeft(objectId) {
+    const message = {
+      type: 'swipe_left',
+      objectId: objectId,
+      timestamp: Date.now()
+    };
+
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(JSON.stringify(message));
+    }
+    // Don't queue swipe_left - rejections don't need to be persisted
   }
 
   flushSwipeQueue() {
@@ -739,12 +757,17 @@ class DreamHackersApp {
 
     const obj = this.objects[this.currentIndex];
 
+    // Build card HTML - use image if available, fallback to emoji
+    const thumbnailHtml = obj.image
+      ? `<img class="card-image" src="${obj.image}" alt="${obj.name}">`
+      : `<div class="card-emoji">${obj.thumbnail}</div>`;
+
     // Build card HTML (action buttons are now in HTML, outside card container)
     this.elements.cardContainer.innerHTML = `
       <div class="card-container-tint tint-left"></div>
       <div class="card-container-tint tint-right"></div>
       <div class="card">
-        <div class="card-emoji">${obj.thumbnail}</div>
+        ${thumbnailHtml}
         <div class="card-name">${obj.name}</div>
         <div class="card-description">${obj.description}</div>
       </div>
