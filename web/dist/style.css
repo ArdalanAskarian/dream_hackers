@@ -283,6 +283,22 @@ h1 .italic {
   border-radius: 10px;
 }
 
+/* 3D Model Container */
+.card-3d-container {
+  width: 180px;
+  height: 180px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-3d-container canvas {
+  border-radius: 10px;
+}
+
 .card-name {
   font-family: 'Cinzel', serif;
   font-size: 22px;

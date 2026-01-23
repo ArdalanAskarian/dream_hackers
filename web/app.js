@@ -11,6 +11,169 @@ if (isCapacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Haptics)
   console.log('Capacitor Haptics available');
 }
 
+// ==========================================
+// 3D MODEL VIEWER CLASS
+// ==========================================
+class ModelViewer {
+  constructor(container, options = {}) {
+    this.container = container;
+    this.options = {
+      color: options.color || '#8B5CF6',
+      autoRotate: options.autoRotate !== false,
+      ...options
+    };
+
+    this.scene = null;
+    this.camera = null;
+    this.renderer = null;
+    this.model = null;
+    this.animationId = null;
+    this.isDestroyed = false;
+
+    this.init();
+  }
+
+  init() {
+    const width = this.container.clientWidth || 200;
+    const height = this.container.clientHeight || 200;
+
+    // Scene
+    this.scene = new THREE.Scene();
+
+    // Camera
+    this.camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+    this.camera.position.z = 3;
+
+    // Renderer
+    this.renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true
+    });
+    this.renderer.setSize(width, height);
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setClearColor(0x000000, 0);
+    this.container.appendChild(this.renderer.domElement);
+
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    this.scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight.position.set(5, 5, 5);
+    this.scene.add(directionalLight);
+
+    const backLight = new THREE.DirectionalLight(0xffffff, 0.3);
+    backLight.position.set(-5, -5, -5);
+    this.scene.add(backLight);
+
+    // Start animation
+    this.animate();
+  }
+
+  // Create primitive shape (fallback if no GLB model)
+  createPrimitive(type, color) {
+    let geometry;
+
+    switch(type) {
+      case 'sphere':
+        geometry = new THREE.SphereGeometry(0.8, 32, 32);
+        break;
+      case 'cube':
+        geometry = new THREE.BoxGeometry(1.2, 1.2, 1.2);
+        break;
+      case 'cylinder':
+        geometry = new THREE.CylinderGeometry(0.6, 0.6, 1.4, 32);
+        break;
+      case 'cone':
+        geometry = new THREE.ConeGeometry(0.7, 1.4, 32);
+        break;
+      case 'torus':
+        geometry = new THREE.TorusGeometry(0.6, 0.25, 16, 100);
+        break;
+      default:
+        geometry = new THREE.SphereGeometry(0.8, 32, 32);
+    }
+
+    const material = new THREE.MeshStandardMaterial({
+      color: new THREE.Color(color),
+      metalness: 0.3,
+      roughness: 0.4,
+      emissive: new THREE.Color(color),
+      emissiveIntensity: 0.1
+    });
+
+    this.model = new THREE.Mesh(geometry, material);
+    this.scene.add(this.model);
+  }
+
+  // Load GLB model (if available)
+  loadModel(url, fallbackType, color) {
+    if (typeof THREE.GLTFLoader === 'undefined') {
+      console.log('GLTFLoader not available, using primitive');
+      this.createPrimitive(fallbackType, color);
+      return;
+    }
+
+    const loader = new THREE.GLTFLoader();
+
+    loader.load(
+      url,
+      (gltf) => {
+        this.model = gltf.scene;
+
+        // Center and scale the model
+        const box = new THREE.Box3().setFromObject(this.model);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 1.5 / maxDim;
+
+        this.model.scale.setScalar(scale);
+        this.model.position.sub(center.multiplyScalar(scale));
+
+        this.scene.add(this.model);
+      },
+      undefined,
+      (error) => {
+        console.log('Model load failed, using primitive:', error);
+        this.createPrimitive(fallbackType, color);
+      }
+    );
+  }
+
+  animate() {
+    if (this.isDestroyed) return;
+
+    this.animationId = requestAnimationFrame(() => this.animate());
+
+    if (this.model && this.options.autoRotate) {
+      this.model.rotation.y += 0.01;
+      this.model.rotation.x += 0.005;
+    }
+
+    this.renderer.render(this.scene, this.camera);
+  }
+
+  destroy() {
+    this.isDestroyed = true;
+
+    if (this.animationId) {
+      cancelAnimationFrame(this.animationId);
+    }
+
+    if (this.renderer) {
+      this.renderer.dispose();
+      if (this.renderer.domElement && this.renderer.domElement.parentNode) {
+        this.renderer.domElement.parentNode.removeChild(this.renderer.domElement);
+      }
+    }
+
+    if (this.model) {
+      this.scene.remove(this.model);
+    }
+  }
+}
+
 class DreamHackersApp {
   // Configuration constants
   static CONFIG = {
@@ -45,6 +208,9 @@ class DreamHackersApp {
     this.lastTapTime = 0;
     this.rafId = null;
     this.serverIP = null;
+
+    // 3D Model viewer
+    this.currentModelViewer = null;
 
     this.elements = {
       connectionScreen: document.getElementById('connection-screen'),
@@ -750,6 +916,12 @@ class DreamHackersApp {
   }
 
   renderCard() {
+    // Cleanup previous 3D viewer
+    if (this.currentModelViewer) {
+      this.currentModelViewer.destroy();
+      this.currentModelViewer = null;
+    }
+
     if (this.currentIndex >= this.objects.length) {
       this.showNoMoreCards();
       return;
@@ -757,23 +929,43 @@ class DreamHackersApp {
 
     const obj = this.objects[this.currentIndex];
 
-    // Build card HTML - use image if available, fallback to emoji
-    const thumbnailHtml = obj.image
-      ? `<img class="card-image" src="${obj.image}" alt="${obj.name}">`
-      : `<div class="card-emoji">${obj.thumbnail}</div>`;
-
-    // Build card HTML (action buttons are now in HTML, outside card container)
+    // Build card HTML with 3D canvas container
     this.elements.cardContainer.innerHTML = `
       <div class="card-container-tint tint-left"></div>
       <div class="card-container-tint tint-right"></div>
       <div class="card">
-        ${thumbnailHtml}
+        <div class="card-3d-container" id="model-container"></div>
         <div class="card-name">${obj.name}</div>
         <div class="card-description">${obj.description}</div>
       </div>
       <div class="swipe-indicators swipe-left-indicator">✗</div>
       <div class="swipe-indicators swipe-right-indicator">✓</div>
     `;
+
+    // Initialize 3D viewer
+    const modelContainer = document.getElementById('model-container');
+    if (modelContainer && typeof THREE !== 'undefined') {
+      this.currentModelViewer = new ModelViewer(modelContainer, {
+        color: obj.color || '#8B5CF6',
+        autoRotate: true
+      });
+
+      // Try to load GLB model, fallback to primitive
+      if (obj.model) {
+        this.currentModelViewer.loadModel(obj.model, obj.id, obj.color || '#8B5CF6');
+      } else {
+        this.currentModelViewer.createPrimitive(obj.id, obj.color || '#8B5CF6');
+      }
+    } else {
+      // Fallback to emoji if Three.js not available
+      const card = this.elements.cardContainer.querySelector('.card');
+      if (card) {
+        const container = card.querySelector('.card-3d-container');
+        if (container) {
+          container.innerHTML = `<div class="card-emoji">${obj.thumbnail}</div>`;
+        }
+      }
+    }
   }
 
   showNoMoreCards() {
