@@ -1,0 +1,28 @@
+{
+  "objects": [
+    {
+      "id": "sphere",
+      "name": "Memory Orb",
+      "description": "A floating sphere of collected memories",
+      "thumbnail": "🔮"
+    },
+    {
+      "id": "cube",
+      "name": "Thought Block",
+      "description": "A solid block of crystallized thought",
+      "thumbnail": "📦"
+    },
+    {
+      "id": "torus",
+      "name": "Dream Ring",
+      "description": "An endless loop of recurring dreams",
+      "thumbnail": "💫"
+    },
+    {
+      "id": "cylinder",
+      "name": "Time Capsule",
+      "description": "A vessel containing fragments of time",
+      "thumbnail": "🕰️"
+    }
+  ]
+}
