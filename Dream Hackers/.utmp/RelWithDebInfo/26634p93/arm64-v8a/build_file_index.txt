@@ -1,0 +1,2 @@
+/Users/ardalanaskarian/Desktop/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/CMakeLists.txt
+/Users/ardalanaskarian/Desktop/dream_hackers/Dream Hackers/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/CMakeLists.txt

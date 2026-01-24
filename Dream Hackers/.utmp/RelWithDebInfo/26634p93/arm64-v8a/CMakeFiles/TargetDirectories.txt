@@ -1,0 +1,5 @@
+/Users/ardalanaskarian/Desktop/dream_hackers/Dream Hackers/.utmp/RelWithDebInfo/26634p93/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/ardalanaskarian/Desktop/dream_hackers/Dream Hackers/.utmp/RelWithDebInfo/26634p93/arm64-v8a/CMakeFiles/rebuild_cache.dir
+/Users/ardalanaskarian/Desktop/dream_hackers/Dream Hackers/.utmp/RelWithDebInfo/26634p93/arm64-v8a/GameActivity/CMakeFiles/game.dir
+/Users/ardalanaskarian/Desktop/dream_hackers/Dream Hackers/.utmp/RelWithDebInfo/26634p93/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+/Users/ardalanaskarian/Desktop/dream_hackers/Dream Hackers/.utmp/RelWithDebInfo/26634p93/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir
