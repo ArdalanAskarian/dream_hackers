@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 255914899087267697}
   - component: {fileID: 4946905656439848103}
   - component: {fileID: 7096434784375754074}
+  - component: {fileID: -7694675419780939036}
   m_Layer: 0
   m_Name: Television_01_4k
   m_TagString: Untagged
@@ -270,3 +271,16 @@ MonoBehaviour:
   m_LimitAngularVelocity: 0
   m_MaxLinearVelocityDelta: 10
   m_MaxAngularVelocityDelta: 20
+--- !u!114 &-7694675419780939036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7099306792597548356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7280d1a0e614f178d9eec041b519ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickupAnimatorTrigger
+  triggerName: Trigger
