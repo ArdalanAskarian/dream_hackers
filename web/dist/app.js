@@ -119,23 +119,40 @@ class ModelViewer {
     loader.load(
       url,
       (gltf) => {
-        this.model = gltf.scene;
+        const loadedModel = gltf.scene;
 
-        // Center and scale the model
-        const box = new THREE.Box3().setFromObject(this.model);
+        // Calculate bounding box to find center and size
+        const box = new THREE.Box3().setFromObject(loadedModel);
         const center = box.getCenter(new THREE.Vector3());
         const size = box.getSize(new THREE.Vector3());
         const maxDim = Math.max(size.x, size.y, size.z);
         const scale = 1.5 / maxDim;
 
-        this.model.scale.setScalar(scale);
-        this.model.position.sub(center.multiplyScalar(scale));
+        // Create a pivot group for proper rotation around center
+        this.model = new THREE.Group();
 
+        // Scale the loaded model
+        loadedModel.scale.setScalar(scale);
+
+        // Offset the model so its center is at the pivot point (0,0,0)
+        loadedModel.position.set(
+          -center.x * scale,
+          -center.y * scale,
+          -center.z * scale
+        );
+
+        // Add the offset model to our pivot group
+        this.model.add(loadedModel);
         this.scene.add(this.model);
+        console.log('Model loaded successfully:', url);
       },
-      undefined,
+      (progress) => {
+        if (progress.total > 0) {
+          console.log('Loading:', url, Math.round((progress.loaded / progress.total) * 100) + '%');
+        }
+      },
       (error) => {
-        console.log('Model load failed, using primitive:', error);
+        console.error('Model load failed:', url, error);
         this.createPrimitive(fallbackType, color);
       }
     );
