@@ -134,16 +134,21 @@ h1 .italic {
 /* Main App Screen */
 #app-screen {
   display: none;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100dvh;
   flex-direction: column;
   position: relative;
   z-index: 1;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  box-sizing: border-box;
 }
 
 /* Title Section */
 #title-section {
-  padding: 60px 20px 20px;
+  padding: calc(20px + env(safe-area-inset-top, 0px)) 20px 10px;
   text-align: center;
+  flex-shrink: 0;
 }
 
 #title-section h1 {
@@ -594,11 +599,12 @@ h1 .italic {
 /* Responsive */
 @media (max-height: 700px) {
   #title-section {
-    padding: 15px 20px 10px;
+    padding: calc(10px + env(safe-area-inset-top, 0px)) 20px 5px;
   }
 
   #title-section h1 {
-    font-size: 20px;
+    font-size: 18px;
+    line-height: 1.2;
   }
 
   .card {
@@ -638,8 +644,13 @@ h1 .italic {
 }
 
 @media (max-height: 600px) {
+  #title-section {
+    padding: calc(5px + env(safe-area-inset-top, 0px)) 20px 5px;
+  }
+
   #title-section h1 {
-    font-size: 16px;
+    font-size: 14px;
+    line-height: 1.1;
   }
 
   .card {
