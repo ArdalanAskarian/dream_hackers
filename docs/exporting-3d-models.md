@@ -36,6 +36,7 @@ The phone app automatically creates basic shapes that match your Unity objects. 
 
 ### Step 3: Copy to Web Folder
 
+Save your GLB files to the models folder:
 ```
 web/models/
 ├── cylinder.glb
@@ -45,20 +46,80 @@ web/models/
 └── cube.glb
 ```
 
-### Step 4: Sync to iOS
+### Step 4: Copy to dist and Sync to iOS
+
+Run these commands from the `web/` folder:
 
 ```bash
-cp web/models/*.glb web/dist/models/
-cd web && npx cap sync ios
+# Copy models to distribution folder
+cp models/*.glb dist/models/
+
+# Sync to iOS
+npx cap sync ios
 ```
 
-Then rebuild in Xcode.
+Then rebuild in Xcode (`web/ios/App/App.xcworkspace`).
+
+---
+
+## File Locations Summary
+
+| What | Path |
+|------|------|
+| Unity FBX models | `Dream Hackers/Assets/Models/` |
+| GLB files go here | `web/models/` |
+| Also copy to | `web/dist/models/` |
+| iOS Xcode project | `web/ios/App/App.xcworkspace` |
+| Object config | `web/objects.json` |
+
+---
+
+## Alternative: Online FBX to GLB Converter (Recommended)
+
+If GLTFUtility doesn't work (it's often import-only), use an online converter:
+
+### Step 1: Locate your FBX files
+
+Your Unity models are already in FBX format at:
+```
+Dream Hackers/Assets/Models/
+```
+
+### Step 2: Convert using ImageToStl
+
+1. Go to: **https://imagetostl.com/convert/file/fbx/to/glb**
+2. Upload each FBX file
+3. Download the converted GLB
+
+### Step 3: Rename files to match object IDs
+
+| FBX File | Rename to |
+|----------|-----------|
+| `Television_01_4k.fbx` | `cylinder.glb` |
+| `boombox_4k.fbx` | `sphere.glb` |
+| `Cat.fbx` | `cone.glb` |
+| `speakerMan.fbx` | `torus.glb` |
+| `phone.fbx` | `cube.glb` |
+
+### Step 4: Save to the models folder
+
+Move the renamed GLB files to:
+```
+web/models/
+```
+
+### Other converter options
+
+If ImageToStl doesn't work, try:
+- https://anyconv.com/fbx-to-glb-converter/
+- https://www.3dpea.com/en/convert/FBX-to-GLB
+- https://fabconvert.com/convert/fbx/to/glb
 
 ---
 
 ## Alternative: Use Blender
 
-If GLTFUtility doesn't work:
+If you prefer more control over the conversion:
 
 1. Export from Unity as FBX (File → Export → FBX)
 2. Open in Blender
