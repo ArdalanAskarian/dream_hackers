@@ -3833,11 +3833,11 @@ MonoBehaviour:
   randomXZOffset: 0.5
   spawnCooldown: 0.5
   cylinderPrefab: {fileID: 7099306792597548356, guid: ea284c8cf29a749ffa1f612b4c356b1f, type: 3}
-  spherePrefab: {fileID: 919132149155446097, guid: ab91fa16dcdcd498b8fb523a7c0fcbf8, type: 3}
-  conePrefab: {fileID: 919132149155446097, guid: 1efa952ba7053b642b318e90702ddf92, type: 3}
-  torusPrefab: {fileID: 919132149155446097, guid: f49e46d5a68238c4b839745fffc33a8a, type: 3}
-  cubePrefab: {fileID: 919132149155446097, guid: baf5ec9a239e8414fbd2c3beae633eb1, type: 3}
-  spawnEffectPrefab: {fileID: 0}
+  spherePrefab: {fileID: 5971607219648564905, guid: 0c049820edcc8435b9d906ae7dc3f648, type: 3}
+  conePrefab: {fileID: 2472757448492677027, guid: d50b8296b71d94b4982b89ba9a33a955, type: 3}
+  torusPrefab: {fileID: 3977791433094065913, guid: 2e3869fbd7b3a449eb5b7f32d63c0792, type: 3}
+  cubePrefab: {fileID: 4752371463926394913, guid: fb027995494ee438db57a9caf819d0be, type: 3}
+  spawnEffectPrefab: {fileID: 1364463852673585654, guid: 30a3aaf542fb05f4d954da2c13b5739d, type: 3}
   showDebugLogs: 1
 --- !u!4 &2095318409
 Transform:
