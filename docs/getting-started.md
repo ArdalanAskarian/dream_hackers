@@ -5,8 +5,9 @@ Get the phone-to-VR system running in under 5 minutes.
 ## Prerequisites
 
 - Node.js installed on your computer
-- Unity 2022 LTS or newer
+- Unity 6 or newer
 - Phone and computer on the same WiFi network
+- Xcode (for iOS app builds)
 
 ## Step 1: Start the Server
 
@@ -44,7 +45,7 @@ Connect your devices to: ws://192.168.1.100:8080
    - **Android**: Open Files app → find `index.html` → tap to open in Chrome
 
 3. Enter server address:
-   - Type: `10.29.155.180:8080` (use your server's IP)
+   - Type: `YOUR_SERVER_IP:8080` (use the IP shown in server terminal)
    - Tap "Connect"
 
 ### Option 2: Via Simple Web Server (Recommended)
@@ -55,11 +56,8 @@ In Terminal, in the `web` folder:
 
 ```bash
 # Python 3 (most Macs have this)
-cd /Users/ardalanaskarian/Desktop/dream_hackers/web
+cd web
 python3 -m http.server 8000
-
-# OR Python 2
-python -m SimpleHTTPServer 8000
 ```
 
 You'll see:
@@ -70,12 +68,24 @@ Serving HTTP on 0.0.0.0 port 8000 ...
 Then on your phone:
 1. Make sure phone is on **same WiFi** as your computer
 2. Open Safari/Chrome
-3. Go to: `http://192.168.1.100:8000` (use your computer's IP)
+3. Go to: `http://YOUR_COMPUTER_IP:8000` (use your computer's IP)
 4. You'll see the Dream Hackers connection screen
-5. Enter: `192.168.1.100:8080` (server IP with WebSocket port)
+5. Enter: `YOUR_COMPUTER_IP:8080` (same IP with WebSocket port)
 6. Tap "Connect"
 
-### Option 3: Via ngrok (If Different WiFi Networks)
+### Option 3: iOS App (Best Experience)
+
+Build and install the native iOS app:
+
+```bash
+cd web
+npm install
+npx cap sync ios
+```
+
+Then open `web/ios/App/App.xcworkspace` in Xcode and build to your iPhone.
+
+### Option 4: Via ngrok (If Different WiFi Networks)
 
 If your phone and computer can't be on the same WiFi:
 

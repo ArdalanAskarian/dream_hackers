@@ -43,20 +43,22 @@ cd server && npm install && node server.js
 
 ## Features
 
-- Tinder-style card swiping on phone
+- Tinder-style card swiping on phone with 3D model previews
 - Real-time object spawning in VR with particle effects
 - Works on local WiFi (no internet required)
 - iOS haptic feedback support
 - Hand tracking and controller support
+- Custom shaders including heartbeat/pulse effects
 
 ## Tech Stack
 
 | Component | Technology |
 |-----------|------------|
-| VR Platform | Meta Quest (Unity 2022 LTS, URP) |
-| XR Framework | Meta XR SDK + XR Interaction Toolkit |
+| VR Platform | Meta Quest (Unity 6, URP) |
+| XR Framework | OpenXR + XR Interaction Toolkit + XR Hands |
 | Communication | WebSocket (Node.js server) |
-| Phone App | HTML/CSS/JS + Capacitor (iOS) |
+| Phone App | HTML/CSS/JS + Three.js + Capacitor (iOS) |
+| 3D Models | GLB format (converted from FBX) |
 
 ## Project Structure
 
