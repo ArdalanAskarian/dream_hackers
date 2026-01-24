@@ -5,7 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class PickupAnimatorTrigger : MonoBehaviour
 {
     [Header("Animator Settings")]
-    [SerializeField] private string triggerName = "Room_State02";
+    [SerializeField] private string triggerName = "Trigger";
 
     private XRGrabInteractable grabInteractable;
     private Animator targetAnimator;

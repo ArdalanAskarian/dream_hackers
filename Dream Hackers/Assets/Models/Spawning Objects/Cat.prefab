@@ -263,4 +263,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7280d1a0e614f178d9eec041b519ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupAnimatorTrigger
-  triggerName: State02
+  triggerName: Trigger

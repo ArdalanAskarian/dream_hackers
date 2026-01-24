@@ -65,6 +65,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f49e46d5a68238c4b839745fffc33a8a, type: 3}
       insertIndex: -1
       addedObject: {fileID: -3899271709331148041}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f49e46d5a68238c4b839745fffc33a8a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5316254339792305472}
   m_SourcePrefab: {fileID: 100100000, guid: f49e46d5a68238c4b839745fffc33a8a, type: 3}
 --- !u!1 &3977791433094065913 stripped
 GameObject:
@@ -248,3 +251,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.9942108, y: 0.93102825, z: 0.5807539}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5316254339792305472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977791433094065913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7280d1a0e614f178d9eec041b519ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickupAnimatorTrigger
+  triggerName: Trigger
