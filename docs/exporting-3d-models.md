@@ -87,7 +87,7 @@ Dream Hackers/Assets/Models/
 
 ### Step 2: Convert using ImageToStl
 
-1. Go to: **https://imagetostl.com/convert/file/fbx/to/glb**
+1. Go to: **https://imagetostl.com/convert/file/fbx/to/glb#google_vignette**
 2. Upload each FBX file
 3. Download the converted GLB
 
