@@ -81,10 +81,14 @@ h1 .italic {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100dvh;
   padding: 20px;
+  padding-top: calc(60px + env(safe-area-inset-top, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   position: relative;
   z-index: 1;
+  box-sizing: border-box;
 }
 
 #connection-screen h1 {
@@ -139,14 +143,14 @@ h1 .italic {
   flex-direction: column;
   position: relative;
   z-index: 1;
-  padding-top: env(safe-area-inset-top, 0px);
+  padding-top: calc(50px + env(safe-area-inset-top, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
   box-sizing: border-box;
 }
 
 /* Title Section */
 #title-section {
-  padding: calc(20px + env(safe-area-inset-top, 0px)) 20px 10px;
+  padding: 20px 20px 10px;
   text-align: center;
   flex-shrink: 0;
 }
