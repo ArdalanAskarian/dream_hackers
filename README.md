@@ -12,7 +12,7 @@ An immersive VR experience for Meta Quest where players step inside the internet
 
 ### 30-Second Reel
 <!-- Replace with your reel link -->
-[![30s Reel](https://img.shields.io/badge/Watch-Reel%20Video-red?style=for-the-badge&logo=youtube)](https://youtu.be/z4RMkQyVCLU)
+[![30s Reel](https://img.shields.io/badge/Watch-Reel%20Video-red?style=for-the-badge&logo=youtube)](https://youtu.be/Sq_jPCJJbIw)
 
 ---
 
