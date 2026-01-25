@@ -18,6 +18,19 @@ Technical reference for the phone-to-VR communication system.
 │  Client         │         │  phone → VR     │         │       ▼         │
 └─────────────────┘         └─────────────────┘         │  ObjectSpawner  │
                                                         └─────────────────┘
+
+┌─────────────────┐                                     ┌─────────────────┐
+│  Arduino        │                                     │   Unity VR      │
+│  Pulse Sensor   │                                     │                 │
+│                 │         TCP/WiFi                    │ SingularityMgr  │
+│  ┌───────────┐  │────────────────────────────────────▶│       │         │
+│  │ Heartbeat │  │   "BPM: 72 | IBI: 832"             │       ▼         │
+│  │  Sensor   │  │                                     │ MaterialFloat   │
+│  └───────────┘  │                                     │  Controller     │
+└─────────────────┘                                     │       │         │
+                                                        │       ▼         │
+                                                        │  Shader Effects │
+                                                        └─────────────────┘
 ```
 
 ## Components
@@ -57,6 +70,30 @@ Features: connection screen, swipeable cards, touch/mouse support, auto-reconnec
 - Maps object IDs to prefab indices
 - Calculates spawn position (in front of user)
 - Cooldown system (1 second default)
+
+**SingularityManager** (`Assets/SingularityManager.cs`)
+- TCP/WiFi client for Arduino heartbeat sensor
+- Parses messages between `S` and `E` markers
+- Events: `onConnected`, `onMessageRecieved`, `onError`
+- Supports both Bluetooth and WiFi connection modes
+
+**MaterialFloatController** (`Assets/Scripts/MaterialFloatController.cs`)
+- Receives BPM from SingularityManager via Unity event
+- Parses message format: `"BPM: 72 | IBI: 832"`
+- Updates shader float property in real-time
+- Uses MaterialPropertyBlock for efficient rendering
+
+**PickupAnimatorTrigger** (`Assets/Scripts/PickupAnimatorTrigger.cs`)
+- Attaches to XR interactable objects
+- Finds Room animator at runtime (searches "Environment" then "Room")
+- Triggers animation state when object is grabbed
+
+### Arduino Hardware
+
+**Pulse Sensor**
+- Connects to Arduino with WiFi capability (ESP32/ESP8266)
+- Sends heartbeat data over TCP to Unity
+- Default port: 80 (configurable in SingularityManager)
 
 ---
 
@@ -98,6 +135,21 @@ Sent immediately after connecting:
 }
 ```
 
+### Heartbeat Data (Arduino → Unity)
+
+Raw TCP stream with start/end markers:
+
+```
+S BPM: 72 | IBI: 832 E
+```
+
+| Field | Description |
+|-------|-------------|
+| `S` | Start marker |
+| `BPM` | Beats per minute (heart rate) |
+| `IBI` | Inter-beat interval in milliseconds |
+| `E` | End marker |
+
 ---
 
 ## Object Mappings
@@ -124,11 +176,16 @@ dream_hackers/
 │   ├── app.js                # Client logic
 │   └── objects.json          # Object data
 └── Dream Hackers/Assets/
-    └── Scripts/
-        ├── Networking/
-        │   └── NetworkManager.cs
-        └── Spawning/
-            └── SpawnController.cs
+    ├── SingularityManager.cs     # Arduino TCP client
+    ├── Scripts/
+    │   ├── Networking/
+    │   │   └── NetworkManager.cs
+    │   ├── Spawning/
+    │   │   └── SpawnController.cs
+    │   ├── MaterialFloatController.cs  # BPM → shader
+    │   └── PickupAnimatorTrigger.cs    # XR grab events
+    └── Animation/
+        └── Room_Controller.controller  # Room state machine
 ```
 
 ---

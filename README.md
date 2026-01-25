@@ -25,9 +25,15 @@ cd server && npm install && node server.js
 # 2. Connect your phone
 # Open web/index.html on phone, enter the server IP, tap Connect
 
-# 3. Run VR
+# 3. Connect Arduino heartbeat sensor
+# Upload pulse sensor sketch to Arduino
+# Configure SingularityManager in Unity with Arduino IP/port
+# Message format: "BPM: 72 | IBI: 832"
+
+# 4. Run VR
 # Open Unity project, press Play (or build to Quest)
 # Swipe right on phone → objects appear in VR
+# Heartbeat data drives shader effects in real-time
 ```
 
 ## How It Works
@@ -45,10 +51,12 @@ cd server && npm install && node server.js
 
 - Tinder-style card swiping on phone with 3D model previews
 - Real-time object spawning in VR with particle effects
+- **Live heartbeat integration** - Arduino pulse sensor controls shader effects in real-time
 - Works on local WiFi (no internet required)
 - iOS haptic feedback support
 - Hand tracking and controller support
-- Custom shaders including heartbeat/pulse effects
+- XR interactable objects that trigger room animations when grabbed
+- Custom shaders including heartbeat/pulse effects driven by biometric data
 
 ## Tech Stack
 
@@ -58,6 +66,7 @@ cd server && npm install && node server.js
 | XR Framework | OpenXR + XR Interaction Toolkit + XR Hands |
 | Communication | WebSocket (Node.js server) |
 | Phone App | HTML/CSS/JS + Three.js + Capacitor (iOS) |
+| Hardware | Arduino + Pulse Sensor (TCP/WiFi) |
 | 3D Models | GLB format (converted from FBX) |
 
 ## Project Structure
@@ -67,7 +76,10 @@ dream_hackers/
 ├── Dream Hackers/          # Unity project
 │   └── Assets/Scripts/
 │       ├── Networking/     # WebSocket client
-│       └── Spawning/       # Object spawn controller
+│       ├── Spawning/       # Object spawn controller
+│       ├── MaterialFloatController.cs  # BPM → shader control
+│       ├── PickupAnimatorTrigger.cs    # XR grab → animation
+│       └── SingularityManager.cs       # Arduino WiFi connection
 ├── server/                 # Node.js WebSocket server
 ├── web/                    # Mobile phone interface
 │   ├── ios/               # Capacitor iOS app
