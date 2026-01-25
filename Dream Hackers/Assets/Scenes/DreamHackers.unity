@@ -1553,6 +1553,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4f332aea9a46b34bab01d9d6d17f588, type: 3}
+--- !u!1001 &507205002
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1269318830127706165, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.4384
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269318830127706165, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.16906
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269318830127706165, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.4384
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269318830127706165, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269318830127706165, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269318830127706165, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269318830127706165, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269318830127706165, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269318830127706165, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269318830127706165, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7345609282152240273, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: m_Name
+      value: SingularityWifi
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
 --- !u!1 &611011570
 GameObject:
   m_ObjectHideFlags: 0
@@ -4573,3 +4630,4 @@ SceneRoots:
   - {fileID: 722352335}
   - {fileID: 1686438173}
   - {fileID: 456188751}
+  - {fileID: 507205002}
