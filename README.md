@@ -8,7 +8,7 @@ An immersive VR experience for Meta Quest where players step inside the internet
 
 ### Full Demo Video
 <!-- Replace with your demo video link -->
-[![Demo Video](https://img.shields.io/badge/Watch-Demo%20Video-red?style=for-the-badge&logo=youtube)](YOUR_DEMO_VIDEO_URL)
+[![Demo Video](https://img.shields.io/badge/Watch-Demo%20Video-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=NY5WnzpsTtc)
 
 ### 30-Second Reel
 <!-- Replace with your reel link -->
