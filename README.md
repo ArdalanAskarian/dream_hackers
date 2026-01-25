@@ -104,7 +104,7 @@ Built with care by **Dream Hackers** at MIT Reality Hack 2026
 
 | Name | Role |
 |------|------|
-| **Samantha Herle** | Artist & Project Manager |
+| **Samantha Herle** | Designer & Project Manager |
 | **Sean Rove** | Tech Art |
 | **Ardalan Askarian** | Software |
 | **Ben Branch** | Hardware |
