@@ -6,13 +6,13 @@ public class MultiObjectMaterialController : MonoBehaviour
     [Header("Targeting")]
     [Tooltip("List of Renderers to control.")]
     public List<MeshRenderer> targetRenderers = new List<MeshRenderer>();
-    
+
     [Tooltip("The index of the material slot (0 is the first slot).")]
     public int materialSlotIndex = 0;
 
     [Header("Shader Settings")]
     public string propertyName = "_FloatValue";
-	[Range(50f, 110f)]
+    [Range(50f, 110f)]
     public float floatValue = 1.0f;
 
     private int _propertyID;
@@ -41,6 +41,21 @@ public class MultiObjectMaterialController : MonoBehaviour
 
             // 3. Apply the block back to the specific material slot
             renderer.SetPropertyBlock(_propBlock, materialSlotIndex);
+        }
+    }
+
+    // Call this from SingularityManager's onMessageRecieved event
+    // Parses BPM from message format: "BPM: 176 | IBI: 254"
+    public void OnMessageReceived(string message)
+    {
+        string[] parts = message.Split('|');
+        if (parts.Length > 0)
+        {
+            string bpmPart = parts[0].Replace("BPM:", "").Trim();
+            if (float.TryParse(bpmPart, out float bpm))
+            {
+                floatValue = bpm;
+            }
         }
     }
 }
