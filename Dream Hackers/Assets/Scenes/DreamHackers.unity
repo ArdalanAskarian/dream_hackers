@@ -1601,6 +1601,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6570701912612380411, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: onMessageRecieved.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570701912612380411, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: onMessageRecieved.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570701912612380411, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: onMessageRecieved.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1261658545}
+    - target: {fileID: 6570701912612380411, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: onMessageRecieved.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570701912612380411, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: onMessageRecieved.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnMessageReceived
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570701912612380411, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: onMessageRecieved.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MultiObjectMaterialController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570701912612380411, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
+      propertyPath: onMessageRecieved.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7345609282152240273, guid: cd9c2b6398bd74218ab8dc7a6cf429e2, type: 3}
       propertyPath: m_Name
       value: SingularityWifi
@@ -2945,6 +2973,17 @@ LookAtConstraint:
   m_Sources:
   - sourceTransform: {fileID: 1049319372}
     weight: 1
+--- !u!114 &1261658545 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1975549316737512374, guid: fc6e909202671e549b33d7d717b09d62, type: 3}
+  m_PrefabInstance: {fileID: 1866479991}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32104828837a4554da4c3d3cc9137e95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MultiObjectMaterialController
 --- !u!1 &1266641236
 GameObject:
   m_ObjectHideFlags: 0
