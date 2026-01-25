@@ -12,6 +12,146 @@ if (isCapacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Haptics)
 }
 
 // ==========================================
+// AUDIO MANAGER FOR SWIPE SOUNDS
+// ==========================================
+class SwipeAudioManager {
+  constructor() {
+    this.audioContext = null;
+    this.audioBuffers = {
+      swipeLeft: null,
+      swipeRight: null
+    };
+    this.isInitialized = false;
+    this.useWebAudio = true;
+
+    // Fallback HTML5 Audio elements
+    this.fallbackAudio = {
+      swipeLeft: null,
+      swipeRight: null
+    };
+  }
+
+  async init() {
+    try {
+      // Try Web Audio API first (better for iOS)
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (AudioContextClass) {
+        this.audioContext = new AudioContextClass();
+        await this.loadAudioBuffers();
+        console.log('SwipeAudioManager: Web Audio API initialized');
+      } else {
+        this.useWebAudio = false;
+        this.initFallbackAudio();
+      }
+      this.isInitialized = true;
+    } catch (error) {
+      console.warn('SwipeAudioManager: Web Audio failed, using fallback', error);
+      this.useWebAudio = false;
+      this.initFallbackAudio();
+      this.isInitialized = true;
+    }
+  }
+
+  async loadAudioBuffers() {
+    const sounds = [
+      { name: 'swipeLeft', url: 'SwipeLeft.wav' },
+      { name: 'swipeRight', url: 'SwipeRight.wav' }
+    ];
+
+    for (const sound of sounds) {
+      try {
+        const response = await fetch(sound.url);
+        const arrayBuffer = await response.arrayBuffer();
+        this.audioBuffers[sound.name] = await this.audioContext.decodeAudioData(arrayBuffer);
+        console.log(`SwipeAudioManager: Loaded ${sound.name}`);
+      } catch (error) {
+        console.error(`SwipeAudioManager: Failed to load ${sound.name}`, error);
+      }
+    }
+  }
+
+  initFallbackAudio() {
+    this.fallbackAudio.swipeLeft = new Audio('SwipeLeft.wav');
+    this.fallbackAudio.swipeRight = new Audio('SwipeRight.wav');
+
+    // Preload
+    this.fallbackAudio.swipeLeft.preload = 'auto';
+    this.fallbackAudio.swipeRight.preload = 'auto';
+
+    console.log('SwipeAudioManager: Fallback audio initialized');
+  }
+
+  // Call this on first user interaction to unlock audio on iOS
+  async unlockAudio() {
+    if (this.audioContext && this.audioContext.state === 'suspended') {
+      await this.audioContext.resume();
+      console.log('SwipeAudioManager: AudioContext resumed');
+    }
+
+    // Also "warm up" fallback audio with silent play
+    if (this.fallbackAudio.swipeLeft) {
+      this.fallbackAudio.swipeLeft.volume = 0;
+      this.fallbackAudio.swipeLeft.play().catch(() => {});
+      this.fallbackAudio.swipeLeft.pause();
+      this.fallbackAudio.swipeLeft.currentTime = 0;
+      this.fallbackAudio.swipeLeft.volume = 1;
+    }
+    if (this.fallbackAudio.swipeRight) {
+      this.fallbackAudio.swipeRight.volume = 0;
+      this.fallbackAudio.swipeRight.play().catch(() => {});
+      this.fallbackAudio.swipeRight.pause();
+      this.fallbackAudio.swipeRight.currentTime = 0;
+      this.fallbackAudio.swipeRight.volume = 1;
+    }
+  }
+
+  play(soundName) {
+    if (!this.isInitialized) {
+      console.warn('SwipeAudioManager: Not initialized');
+      return;
+    }
+
+    if (this.useWebAudio && this.audioContext && this.audioBuffers[soundName]) {
+      this.playWithWebAudio(soundName);
+    } else if (this.fallbackAudio[soundName]) {
+      this.playWithFallback(soundName);
+    }
+  }
+
+  playWithWebAudio(soundName) {
+    const buffer = this.audioBuffers[soundName];
+    if (!buffer) return;
+
+    const source = this.audioContext.createBufferSource();
+    source.buffer = buffer;
+    source.connect(this.audioContext.destination);
+    source.start(0);
+  }
+
+  playWithFallback(soundName) {
+    const audio = this.fallbackAudio[soundName];
+    if (!audio) return;
+
+    // Reset and play
+    audio.currentTime = 0;
+    audio.play().catch(error => {
+      console.warn('SwipeAudioManager: Fallback play failed', error);
+    });
+  }
+
+  playSwipeLeft() {
+    this.play('swipeLeft');
+  }
+
+  playSwipeRight() {
+    this.play('swipeRight');
+  }
+}
+
+// Global audio manager instance
+let swipeAudioManager = null;
+
+// ==========================================
 // 3D MODEL VIEWER CLASS
 // ==========================================
 class ModelViewer {
@@ -229,6 +369,9 @@ class DreamHackersApp {
     // 3D Model viewer
     this.currentModelViewer = null;
 
+    // Audio manager for swipe sounds
+    this.audioManager = null;
+
     this.elements = {
       connectionScreen: document.getElementById('connection-screen'),
       appScreen: document.getElementById('app-screen'),
@@ -249,6 +392,11 @@ class DreamHackersApp {
   }
 
   async init() {
+    // Initialize audio manager for swipe sounds
+    swipeAudioManager = new SwipeAudioManager();
+    await swipeAudioManager.init();
+    this.audioManager = swipeAudioManager;
+
     // Load objects
     await this.loadObjects();
 
@@ -382,6 +530,11 @@ class DreamHackersApp {
 
   handlePointerStart(clientX, clientY, target) {
     if (!target.classList.contains('card')) return false;
+
+    // Unlock audio on first user interaction (iOS requirement)
+    if (this.audioManager) {
+      this.audioManager.unlockAudio();
+    }
 
     // Double-tap detection
     const now = Date.now();
@@ -622,6 +775,11 @@ class DreamHackersApp {
     const obj = this.objects[this.currentIndex];
     console.log('Swiped left - discarded:', obj.id);
 
+    // Play swipe left sound
+    if (this.audioManager) {
+      this.audioManager.playSwipeLeft();
+    }
+
     // Send reject event to server
     this.sendSwipeLeft(obj.id);
 
@@ -637,6 +795,11 @@ class DreamHackersApp {
   swipeRight(card) {
     const obj = this.objects[this.currentIndex];
     console.log('Swiped right - sending to VR:', obj.id);
+
+    // Play swipe right sound
+    if (this.audioManager) {
+      this.audioManager.playSwipeRight();
+    }
 
     // Send accept event to server
     this.sendSwipeRight(obj.id);
