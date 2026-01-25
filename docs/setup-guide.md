@@ -94,6 +94,9 @@ File → Save Scene (Cmd+S)
 - [ ] Phone connects (green dot)
 - [ ] Phone shows object cards
 - [ ] Swipe gestures work
+- [ ] Swipe left plays reject sound
+- [ ] Swipe right plays accept sound
+- [ ] Haptic feedback works (iOS)
 - [ ] Unity connects to server
 - [ ] Swipe right → object spawns
 - [ ] Particle effect plays

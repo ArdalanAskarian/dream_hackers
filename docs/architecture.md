@@ -49,14 +49,18 @@ Technical reference for the phone-to-VR communication system.
 
 **Location:** `web/`
 
-| File | Purpose |
-|------|---------|
+| File/Folder | Purpose |
+|-------------|---------|
 | `index.html` | UI structure |
 | `style.css` | Responsive styling |
-| `app.js` | Swipe logic + WebSocket client |
+| `app.js` | Swipe logic + WebSocket client + audio |
 | `objects.json` | Object definitions |
+| `sounds/` | Swipe sound effects (SwipeLeft.wav, SwipeRight.wav) |
+| `assets/` | App icon and other assets |
+| `models/` | 3D GLB models for card previews |
+| `ios/` | Capacitor iOS app build |
 
-Features: connection screen, swipeable cards, touch/mouse support, auto-reconnect
+Features: connection screen, swipeable cards, touch/mouse support, auto-reconnect, swipe sound effects, haptic feedback
 
 ### Unity Scripts
 
@@ -173,8 +177,17 @@ dream_hackers/
 ├── web/
 │   ├── index.html            # Phone UI
 │   ├── style.css             # Styling
-│   ├── app.js                # Client logic
-│   └── objects.json          # Object data
+│   ├── app.js                # Client logic + audio manager
+│   ├── objects.json          # Object data
+│   ├── sounds/               # Audio files
+│   │   ├── SwipeLeft.wav     # Reject sound
+│   │   └── SwipeRight.wav    # Accept sound
+│   ├── assets/               # App assets
+│   │   └── AppIcon.png       # iOS app icon (source)
+│   ├── models/               # 3D models (GLB)
+│   ├── dist/                 # Distribution folder (copied to iOS)
+│   └── ios/                  # Capacitor iOS project
+│       └── App/App.xcworkspace
 └── Dream Hackers/Assets/
     ├── SingularityManager.cs     # Arduino TCP client
     ├── Scripts/

@@ -9,6 +9,14 @@ Get the phone-to-VR system running in under 5 minutes.
 - Phone and computer on the same WiFi network
 - Xcode (for iOS app builds)
 
+## Features
+
+- Swipe cards to send objects to VR
+- Sound effects on swipe (left/right)
+- Haptic feedback (iOS)
+- 3D model previews on cards
+- Auto-reconnect on connection loss
+
 ## Step 1: Start the Server
 
 ```bash
@@ -122,6 +130,7 @@ Use the public URL ngrok gives you on your phone.
 | Phone screen | Green dot, "Connected" status |
 | Unity Console | "[NetworkManager] Connected successfully!" |
 | Swipe right on phone | Object appears in Unity Scene view |
+| Swipe sounds | Hear audio feedback on swipe left/right |
 
 ---
 
