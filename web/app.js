@@ -22,6 +22,7 @@ class SwipeAudioManager {
       swipeRight: null
     };
     this.isInitialized = false;
+    this.isUnlocked = false;
     this.useWebAudio = true;
 
     // Fallback HTML5 Audio elements
@@ -54,8 +55,8 @@ class SwipeAudioManager {
 
   async loadAudioBuffers() {
     const sounds = [
-      { name: 'swipeLeft', url: 'SwipeLeft.wav' },
-      { name: 'swipeRight', url: 'SwipeRight.wav' }
+      { name: 'swipeLeft', url: 'sounds/SwipeLeft.wav' },
+      { name: 'swipeRight', url: 'sounds/SwipeRight.wav' }
     ];
 
     for (const sound of sounds) {
@@ -71,8 +72,8 @@ class SwipeAudioManager {
   }
 
   initFallbackAudio() {
-    this.fallbackAudio.swipeLeft = new Audio('SwipeLeft.wav');
-    this.fallbackAudio.swipeRight = new Audio('SwipeRight.wav');
+    this.fallbackAudio.swipeLeft = new Audio('sounds/SwipeLeft.wav');
+    this.fallbackAudio.swipeRight = new Audio('sounds/SwipeRight.wav');
 
     // Preload
     this.fallbackAudio.swipeLeft.preload = 'auto';
@@ -83,25 +84,44 @@ class SwipeAudioManager {
 
   // Call this on first user interaction to unlock audio on iOS
   async unlockAudio() {
-    if (this.audioContext && this.audioContext.state === 'suspended') {
-      await this.audioContext.resume();
-      console.log('SwipeAudioManager: AudioContext resumed');
-    }
+    if (this.isUnlocked) return;
 
-    // Also "warm up" fallback audio with silent play
-    if (this.fallbackAudio.swipeLeft) {
-      this.fallbackAudio.swipeLeft.volume = 0;
-      this.fallbackAudio.swipeLeft.play().catch(() => {});
-      this.fallbackAudio.swipeLeft.pause();
-      this.fallbackAudio.swipeLeft.currentTime = 0;
-      this.fallbackAudio.swipeLeft.volume = 1;
-    }
-    if (this.fallbackAudio.swipeRight) {
-      this.fallbackAudio.swipeRight.volume = 0;
-      this.fallbackAudio.swipeRight.play().catch(() => {});
-      this.fallbackAudio.swipeRight.pause();
-      this.fallbackAudio.swipeRight.currentTime = 0;
-      this.fallbackAudio.swipeRight.volume = 1;
+    try {
+      // Resume AudioContext if suspended
+      if (this.audioContext && this.audioContext.state === 'suspended') {
+        await this.audioContext.resume();
+        console.log('SwipeAudioManager: AudioContext resumed');
+      }
+
+      // Play a silent buffer to fully unlock Web Audio on iOS
+      if (this.audioContext) {
+        const silentBuffer = this.audioContext.createBuffer(1, 1, 22050);
+        const source = this.audioContext.createBufferSource();
+        source.buffer = silentBuffer;
+        source.connect(this.audioContext.destination);
+        source.start(0);
+      }
+
+      // Also "warm up" fallback audio with silent play
+      if (this.fallbackAudio.swipeLeft) {
+        this.fallbackAudio.swipeLeft.volume = 0;
+        await this.fallbackAudio.swipeLeft.play().catch(() => {});
+        this.fallbackAudio.swipeLeft.pause();
+        this.fallbackAudio.swipeLeft.currentTime = 0;
+        this.fallbackAudio.swipeLeft.volume = 1;
+      }
+      if (this.fallbackAudio.swipeRight) {
+        this.fallbackAudio.swipeRight.volume = 0;
+        await this.fallbackAudio.swipeRight.play().catch(() => {});
+        this.fallbackAudio.swipeRight.pause();
+        this.fallbackAudio.swipeRight.currentTime = 0;
+        this.fallbackAudio.swipeRight.volume = 1;
+      }
+
+      this.isUnlocked = true;
+      console.log('SwipeAudioManager: Audio unlocked');
+    } catch (error) {
+      console.warn('SwipeAudioManager: Unlock failed', error);
     }
   }
 
@@ -111,10 +131,18 @@ class SwipeAudioManager {
       return;
     }
 
+    if (!this.isUnlocked) {
+      console.warn('SwipeAudioManager: Audio not unlocked yet');
+    }
+
+    console.log(`SwipeAudioManager: Playing ${soundName}`);
+
     if (this.useWebAudio && this.audioContext && this.audioBuffers[soundName]) {
       this.playWithWebAudio(soundName);
     } else if (this.fallbackAudio[soundName]) {
       this.playWithFallback(soundName);
+    } else {
+      console.warn(`SwipeAudioManager: No audio available for ${soundName}`);
     }
   }
 
