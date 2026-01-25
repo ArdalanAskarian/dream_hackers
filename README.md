@@ -66,7 +66,7 @@ cd server && npm install && node server.js
 | Component | Technology |
 |-----------|------------|
 | VR Platform | Meta Quest (Unity 6, URP) |
-| XR Framework | OpenXR + XR Interaction Toolkit + XR Hands |
+| XR Framework | OpenXR + XR Interaction Toolkit |
 | Communication | WebSocket (Node.js server) |
 | Phone App | HTML/CSS/JS + Three.js + Capacitor (iOS) |
 | Hardware | Arduino + Pulse Sensor (TCP/WiFi) |
