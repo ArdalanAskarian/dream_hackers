@@ -57,7 +57,7 @@ cd server && npm install && node server.js
 - **Live heartbeat integration** - Arduino pulse sensor controls shader effects in real-time
 - Works on local WiFi (no internet required)
 - iOS haptic feedback support
-- Hand tracking and controller support
+- Controller support
 - XR interactable objects that trigger room animations when grabbed
 - Custom shaders including heartbeat/pulse effects driven by biometric data
 
