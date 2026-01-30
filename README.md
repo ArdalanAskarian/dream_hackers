@@ -141,7 +141,7 @@ cd server && npm install && node server.js
 # Tap "Connect"
 
 # ═══════════════════════════════════════════════════════════════
-# 3. CONNECT HEARTBEAT SENSOR (Optional but magical)
+# 3. CONNECT HEARTBEAT SENSOR
 # ═══════════════════════════════════════════════════════════════
 # Upload pulse sensor sketch to Arduino
 # Configure SingularityManager in Unity:
